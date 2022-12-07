@@ -3,3 +3,5 @@ server:
 token:
   jwt-secret: enigma
   jwt-expiration: 7200000
+service:
+  authentication: http://localhost:3131/auth/token-validation
