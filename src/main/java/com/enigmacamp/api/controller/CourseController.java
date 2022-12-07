@@ -1,5 +1,6 @@
 package com.enigmacamp.api.controller;
 
+import com.enigmacamp.exception.UnauthorizedException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,27 +18,12 @@ import java.util.Optional;
 @RequestMapping("/courses")
 public class CourseController {
     @GetMapping
-    public ResponseEntity getAllCourse(@RequestHeader(name = "my-header", required = false) String header) {
-        System.out.println(header);
-
-        if (header == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("token is null");
-
-        if (header.equals("123")) return ResponseEntity.ok("get all courses");
-
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("token is invalid");
+    public ResponseEntity getAllCourse() {
+            return ResponseEntity.ok("get all courses");
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getCourseById(@PathVariable String id, @RequestHeader Map<String, String> headers) {
-        for (String headerName : headers.keySet()) {
-            System.out.println("Key: " + headerName + " " + headers.get(headerName));
-        }
-
-        if (headers.get("my-header") == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("token is null");
-        if (headers.get("my-header").equals("123")) return ResponseEntity.ok("get course with id: " + id);
-
-        System.out.println(headers);
-
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("token is invalid");
+    public ResponseEntity getCourseById(@PathVariable String id) {
+        return ResponseEntity.ok("get course with id: " + id);
     }
 }

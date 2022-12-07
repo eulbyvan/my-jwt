@@ -1,5 +1,6 @@
 package com.enigmacamp.api.config;
 
+import com.enigmacamp.api.interceptor.MyHeaderInterceptor;
 import com.enigmacamp.api.interceptor.SimpleInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
@@ -17,8 +18,12 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Autowired
     SimpleInterceptor simpleInterceptor;
 
+    @Autowired
+    MyHeaderInterceptor myHeaderInterceptor;
+
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(simpleInterceptor);
+        registry.addInterceptor(myHeaderInterceptor);
     }
 }
