@@ -1,4 +1,4 @@
-package com.enigmacamp.api;
+package com.enigmacamp.api.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,6 +32,12 @@ public class CourseController {
         for (String headerName : headers.keySet()) {
             System.out.println("Key: " + headerName + " " + headers.get(headerName));
         }
-        return ResponseEntity.ok("get course with id: " + id);
+
+        if (headers.get("my-header") == null) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("token is null");
+        if (headers.get("my-header").equals("123")) return ResponseEntity.ok("get course with id: " + id);
+
+        System.out.println(headers);
+
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("token is invalid");
     }
 }
