@@ -1,2 +1,5 @@
 server:
   port: 9898
+token:
+  jwt-secret: enigma
+  jwt-expiration: 7200000

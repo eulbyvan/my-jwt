@@ -1,8 +1,8 @@
 package com.enigmacamp.api.interceptor;
 
 import com.enigmacamp.exception.UnauthorizedException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.enigmacamp.util.JwtUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -17,14 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 public class MyHeaderInterceptor implements HandlerInterceptor {
+    @Autowired
+    JwtUtil jwtUtil;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("pre handle from " + request.getRequestURI());
-        String token = request.getHeader("my-header");
-
-        if (token == null) throw new UnauthorizedException();
-        if (!token.equals("123")) throw new UnauthorizedException();
-
-        return true;
+        if (request.getRequestURI().contains("token")) return true;
+        return jwtUtil.validateToken(request.getHeader("my-header"));
     }
 }

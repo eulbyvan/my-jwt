@@ -20,4 +20,11 @@ public class ErrorController {
                 .status(HttpStatus.UNAUTHORIZED)
                 .body("unauthorized");
     }
+
+    @ExceptionHandler(Exception.class)
+    ResponseEntity<String> handleException(UnauthorizedException e) {
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body("unknown error");
+    }
 }
